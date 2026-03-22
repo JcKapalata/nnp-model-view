@@ -44,6 +44,15 @@ export class AccueilComponent implements OnInit, OnDestroy {
       title: "Les Chroniques de Goma",
       description: "Le quotidien de la jeunesse créative.",
       tags: ['#goma', '#serie']
+    },
+    {
+      id: 3,
+      type: 'image',
+      image: 'hero/hero-003.jpg',
+      category: 'PODCAST',
+      title: "Vérifier l’information",
+      description: "Ne pas laisser les fausses infos brouiller notre regard ",
+      tags: ['#congo', '#culture']
     }
   ];
 
