@@ -6,9 +6,9 @@
 
 .hero-container {
   position: relative;
-  height: 80vh;
+  height: 80vh; // Hauteur du bandeau principal
   width: 100%;
-  overflow: hidden;
+  overflow: hidden; // Cache les images/vidéos qui attendent à côté
   background-color: #000;
 
   .hero-track {
@@ -19,13 +19,12 @@
   }
 
   .hero-slide {
-    flex: 0 0 100%;
+    flex: 0 0 100%; // Force une seule slide par écran
     width: 100%;
     height: 100%;
     position: relative;
     display: flex;
-    align-items: center; // Centre le texte verticalement
-    // On enlève le padding 8% qui créait le vide inutile
+    align-items: center; 
   }
 
   .hero-bg {
@@ -33,65 +32,98 @@
     inset: 0;
     z-index: 1;
     display: flex;
-    justify-content: center; // Centre l'image horizontalement au milieu de l'écran
-    align-items: center;     // Centre l'image verticalement
+    justify-content: center; // Centre horizontalement
+    align-items: center;     // Centre verticalement
 
+    // LOGIQUE IMAGE
     .img-bg {
-      // Respecte la taille originale sans forcer le 100%
       max-width: 100%;
       max-height: 100%;
       width: auto;
       height: auto;
-      object-fit: contain; 
+      object-fit: contain; // Affiche l'image entière sans la couper
+    }
+
+    // LOGIQUE VIDÉO
+    .video-viewport {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .video-wrapper {
+        width: 100%;
+        max-width: 100%;
+        aspect-ratio: 16 / 9; // Format cinéma standard
+        
+        iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+      }
     }
 
     .overlay {
       position: absolute;
       inset: 0;
       z-index: 2;
-      // Le dégradé sombre ne s'affiche que derrière le texte (à gauche)
-      background: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, transparent 60%);
+      // Dégradé pour la lisibilité du texte à gauche
+      background: linear-gradient(90deg, rgba(0,0,0,0.85) 0%, transparent 60%);
+      pointer-events: none;
     }
   }
 
   .hero-content {
     position: relative;
     z-index: 3;
-    padding: 0 5%; // Marges pour le texte seulement
-    max-width: 800px;
+    padding: 0 5%;
+    max-width: 750px;
     color: white;
 
-    .top-label { color: #ffa000; font-weight: 700; margin-bottom: 5px; }
-    .main-title { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1; }
-    .btn-play { background: #ffa000 !important; color: black !important; margin-top: 20px; }
+    .top-label { color: #ffa000; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; }
+    .main-title { 
+      font-size: clamp(2rem, 5vw, 3.5rem); 
+      font-weight: 800; 
+      margin: 10px 0; 
+      line-height: 1.1; 
+    }
+    .description { color: #ddd; margin-bottom: 25px; }
+    
+    .tag-list {
+      display: flex; gap: 15px; margin-bottom: 30px;
+      .tag-item { color: #999; font-size: 0.9rem; }
+    }
+
+    .btn-play { 
+      background: #ffa000 !important; 
+      color: #000 !important; 
+      font-weight: bold; 
+      padding: 10px 25px;
+    }
   }
 
   .nav-arrow {
     position: absolute; top: 50%; transform: translateY(-50%); z-index: 10;
     background: rgba(255,255,255,0.1); border: none; color: white;
     width: 45px; height: 45px; border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
     &:hover { background: #ffa000; color: black; }
-    &.left { left: 10px; }
-    &.right { right: 10px; }
+    &.left { left: 15px; }
+    &.right { right: 15px; }
   }
 }
 
+// Section basse (Grille de miniatures)
 .container-2xl {
   max-width: 1400px;
-  margin: -40px auto 0;
+  margin: -50px auto 0;
   position: relative;
   z-index: 5;
   padding: 0 20px 60px;
 
-  .section-title { font-size: 1.3rem; color: white; margin-bottom: 20px; }
-
-  .category-row {
-    display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none;
-    .cat-chip {
-      background: #1a1a1a; border: 1px solid #333; color: white; padding: 8px 20px; border-radius: 4px;
-      &.active { background: #ffa000; color: black; border: none; }
-    }
-  }
+  .section-title { font-size: 1.4rem; color: #fff; margin-bottom: 20px; font-weight: 700; }
 
   .video-grid {
     display: flex; gap: 20px; overflow-x: auto; scrollbar-width: none;
@@ -99,5 +131,13 @@
       border-radius: 8px; overflow: hidden; width: 280px; aspect-ratio: 16/9; position: relative;
       img { width: 100%; height: 100%; object-fit: cover; }
     }
+  }
+}
+
+// Adaptation Mobile
+@media (max-width: 768px) {
+  .hero-container {
+    height: 60vh;
+    .hero-content { .main-title { font-size: 2.2rem; } }
   }
 }

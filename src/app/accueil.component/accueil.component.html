@@ -2,19 +2,23 @@
   
   <section class="hero-container">
     <div class="hero-track" [style.transform]="'translateX(-' + currentIndex() * 100 + '%)'">
+      
       @for (slide of heroSlides; track slide.id; let i = $index) {
         <div class="hero-slide" [class.active]="currentIndex() === i">
           
           <div class="hero-bg">
             @if (slide.type === 'video') {
-              <div class="video-wrapper">
-                <iframe 
-                  [src]="'https://www.youtube.com/embed/' + slide.videoId + '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + slide.videoId | safeUrl"
-                  frameborder="0" allow="autoplay; encrypted-media">
-                </iframe>
+              <div class="video-viewport">
+                <div class="video-wrapper">
+                  <iframe 
+                    [src]="'https://www.youtube.com/embed/' + slide.videoId + '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + slide.videoId | safeUrl"
+                    frameborder="0" 
+                    allow="autoplay; encrypted-media">
+                  </iframe>
+                </div>
               </div>
             } @else {
-              <img [src]="slide.image" class="img-bg">
+              <img [src]="slide.image" class="img-bg" alt="Hero Background">
             }
             <div class="overlay"></div>
           </div>
@@ -24,36 +28,34 @@
             <h1 class="main-title">{{ slide.title }}</h1>
             <p class="description">{{ slide.description }}</p>
             <div class="tag-list">
-              @for (tag of slide.tags; track tag) { <span class="tag-item">{{ tag }}</span> }
+              @for (tag of slide.tags; track tag) { 
+                <span class="tag-item">{{ tag }}</span> 
+              }
             </div>
             <button mat-flat-button class="btn-play">
               <mat-icon>play_arrow</mat-icon> REGARDER MAINTENANT
             </button>
           </div>
+
         </div>
       }
     </div>
 
-    <button class="nav-arrow left" (click)="prevSlide()"><mat-icon>chevron_left</mat-icon></button>
-    <button class="nav-arrow right" (click)="nextSlide()"><mat-icon>chevron_right</mat-icon></button>
+    <button class="nav-arrow left" (click)="prevSlide()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button class="nav-arrow right" (click)="nextSlide()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
   </section>
 
   <main class="container-2xl">
-    <h2 class="section-title">Parcourir les Catégories</h2>
-    <div class="category-row">
-      @for (cat of categories(); track cat) {
-        <button class="cat-chip" [class.active]="categorySelected() === cat" (click)="categorySelected.set(cat)">
-          {{ cat }}
-        </button>
-      }
-    </div>
-
     <h2 class="section-title">Récemment Ajoutés</h2>
     <div class="video-grid">
       @for (item of [1,2,3,4,5,6]; track item) {
         <div class="video-card">
           <div class="thumb">
-            <img src="assets/hero/hero-001.jpg" alt="">
+            <img src="assets/hero/hero-001.jpg" alt="Miniature">
             <div class="play-overlay"><mat-icon>play_circle_outline</mat-icon></div>
           </div>
         </div>
