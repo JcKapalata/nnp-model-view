@@ -1,11 +1,13 @@
 .nnp-navbar {
-  background: var(--nnp-bg-header) !important;
-  backdrop-filter: blur(10px);
+  background: rgba(17, 17, 17, 0.9) !important; // var(--nnp-bg-header)
+  backdrop-filter: blur(15px);
   height: 80px;
   position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
-  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 
   .navbar-wrapper {
     width: 100%;
@@ -14,29 +16,32 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    padding: 0 1rem;
   }
 }
 
 .logo-img {
-  height: 45px;
-  vertical-align: middle;
+  height: 42px;
+  width: auto;
 }
 
-// Barre de recherche stylisée
 .search-box {
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 30px;
-  padding: 4px 4px 4px 15px;
-  width: 100%;
-  min-width: 350px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50px;
+  padding: 4px 4px 4px 16px;
+  width: 450px;
+  transition: all 0.3s ease;
+
+  &:focus-within {
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 2px rgba(246, 148, 29, 0.2);
+  }
 
   mat-icon {
-    color: var(--nnp-text-muted);
-    margin-right: 8px;
+    color: #888;
+    margin-right: 10px;
   }
 
   input {
@@ -45,34 +50,57 @@
     color: white;
     flex: 1;
     outline: none;
-    font-size: 14px;
+    font-size: 0.9rem;
+    &::placeholder { color: #666; }
   }
 
   .btn-search {
     background-color: var(--nnp-accent) !important;
-    color: black !important;
-    border-radius: 30px;
+    color: #000 !important;
+    border-radius: 50px;
     font-weight: 600;
+    padding: 0 20px;
+    height: 36px;
+    line-height: 36px;
   }
 }
 
-.nav-item {
-  margin-right: 10px;
-  mat-icon { margin-right: 4px; }
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .nav-item {
+    color: white;
+    font-weight: 400;
+    mat-icon { margin-right: 6px; }
+  }
 }
 
 .flag-icon {
-  width: 22px;
+  width: 24px;
+  height: 16px;
+  object-fit: cover;
   border-radius: 2px;
   margin-right: 8px;
+}
+
+.flag-icon-menu {
+  width: 20px;
+  margin-right: 12px;
+  border-radius: 2px;
 }
 
 // Responsive
 .mobile-only { display: none; }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
+  .nav-center { width: 300px; }
+}
+
+@media (max-width: 850px) {
   .desktop-only, .nav-center { display: none; }
-  .mobile-only { display: block; }
+  .mobile-only { display: block; color: white; }
 }
 
 .mobile-menu {
@@ -80,9 +108,24 @@
   top: 80px;
   left: 0;
   right: 0;
-  background: var(--nnp-bg-secondary);
+  background: #1a1a1a;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 10px;
   z-index: 999;
+  
+  button {
+    color: white;
+    text-align: left;
+    height: 50px;
+  }
+}
+
+// Personnalisation du menu Material (Dark)
+::ng-deep .nnp-dark-menu {
+  background: #222 !important;
+  .mat-mdc-menu-item {
+    color: white !important;
+    &:hover { background: rgba(255, 255, 255, 0.1) !important; }
+  }
 }

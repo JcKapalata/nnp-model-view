@@ -3,7 +3,7 @@
     
     <div class="nav-left">
       <a href="/" class="logo-link">
-        <img src="assets/logo.png" alt="NNP Stream" class="logo-img">
+        <img src="nnp-logo.png" alt="NNP Stream" class="logo-img">
       </a>
     </div>
 
@@ -11,33 +11,39 @@
       <div class="search-box">
         <mat-icon>search</mat-icon>
         <input type="text" placeholder="Rechercher des vidéos...">
-        <button mat-flat-button color="primary" class="btn-search">
+        <button mat-flat-button class="btn-search">
           Recherche
         </button>
       </div>
     </div>
 
     <div class="nav-right desktop-only">
-      <button mat-button class="nav-item">
-        <mat-icon>live_tv</mat-icon>
-        En Direct
-      </button>
-      
-      <button mat-button class="nav-item">
-        <mat-icon>favorite_border</mat-icon>
-        Favoris
-      </button>
+        <button mat-button class="nav-item">
+            <mat-icon>live_tv</mat-icon>
+            En Direct
+        </button>
+        
+        <button mat-button class="nav-item">
+            <mat-icon>favorite_border</mat-icon>
+            Favoris
+        </button>
 
-      <button mat-button [matMenuTriggerFor]="langMenu" class="lang-picker">
-        <img src="assets/flags/fr.png" alt="FR" class="flag-icon">
-        FR
-        <mat-icon>expand_more</mat-icon>
-      </button>
-      
-      <mat-menu #langMenu="matMenu" class="dark-menu">
-        <button mat-menu-item>English</button>
-        <button mat-menu-item>Français</button>
-      </mat-menu>
+        <button mat-button [matMenuTriggerFor]="langMenu" class="lang-picker">
+            <img [src]="currentLang().flag" [alt]="currentLang().label" class="flag-icon">
+            <span class="lang-text">{{ currentLang().label }}</span>
+            <mat-icon>expand_more</mat-icon>
+        </button>
+
+        <mat-menu #langMenu="matMenu" class="nnp-dark-menu">
+            <button mat-menu-item (click)="changeLang('fr')">
+                <img src="lang/francais.png" alt="FR" class="flag-icon-menu">
+                <span>Français</span>
+            </button>
+            <button mat-menu-item (click)="changeLang('en')">
+                <img src="lang/anglais.png" alt="EN" class="flag-icon-menu">
+                <span>English</span>
+            </button>
+        </mat-menu>
     </div>
 
     <button mat-icon-button class="mobile-only" (click)="toggleMenu()">
@@ -50,5 +56,8 @@
   <div class="mobile-menu mat-elevation-z4">
     <button mat-menu-item><mat-icon>live_tv</mat-icon> En Direct</button>
     <button mat-menu-item><mat-icon>favorite_border</mat-icon> Favoris</button>
+    <button mat-menu-item [matMenuTriggerFor]="langMenu">
+        <mat-icon>language</mat-icon> Langue ({{ currentLang().label }})
+    </button>
   </div>
 }
