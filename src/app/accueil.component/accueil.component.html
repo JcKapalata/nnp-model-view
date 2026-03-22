@@ -14,7 +14,7 @@
                 </iframe>
               </div>
             } @else {
-              <img [src]="slide.image" class="img-bg" alt="">
+              <img [src]="slide.image" class="img-bg">
             }
             <div class="overlay"></div>
           </div>
@@ -42,7 +42,7 @@
     <h2 class="section-title">Parcourir les Catégories</h2>
     <div class="category-row">
       @for (cat of categories(); track cat) {
-        <button class="cat-chip" [class.active]="categorySelected() === cat" (click)="selectCategory(cat)">
+        <button class="cat-chip" [class.active]="categorySelected() === cat" (click)="categorySelected.set(cat)">
           {{ cat }}
         </button>
       }
@@ -53,7 +53,7 @@
       @for (item of [1,2,3,4,5,6]; track item) {
         <div class="video-card">
           <div class="thumb">
-            <img src="assets/hero/hero-001.jpg" alt="Video">
+            <img src="assets/hero/hero-001.jpg" alt="">
             <div class="play-overlay"><mat-icon>play_circle_outline</mat-icon></div>
           </div>
         </div>
