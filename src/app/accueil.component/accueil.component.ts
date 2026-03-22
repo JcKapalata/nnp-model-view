@@ -1,34 +1,74 @@
-import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, signal, OnInit, OnDestroy, inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
+import { SafeUrlPipe } from '../pipes/safe-url.pipe-pipe';
 
 @Component({
   selector: 'app-accueil',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule, MatChipsModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule, SafeUrlPipe],
   templateUrl: './accueil.component.html',
   styleUrl: './accueil.component.scss',
 })
-export class AccueilComponent {
-  // Catégories pour le filtre
-  categories = signal([
-    'TOUT', 'DOCUMENTAIRES', 'FILMS', 'SERIES', 'NNP PODCAST', 'EMISSION', 'WHATS\'UP NNP', 'NNP FREESTYLE'
-  ]);
-
+export class AccueilComponent implements OnInit, OnDestroy {
+  private platformId = inject(PLATFORM_ID);
+  
+  categories = signal(['TOUT', 'DOCUMENTAIRES', 'FILMS', 'SERIES', 'NNP PODCAST', 'EMISSION', 'WHATS\'UP NNP', 'NNP FREESTYLE']);
   categorySelected = signal('TOUT');
 
-  // Données du Hero Banner
-  hero = {
-    category: 'SLAM POÉSIE ET FREESTYLE',
-    title: "NNP Freestyle avec Franky'D",
-    description: "Découvrez la performance exceptionnelle de Franky'D, notre slameuse passionnée, qui manie les mots comme personne pour émouvoir et éveiller les consciences.",
-    tags: ['#slampoesie', '#slam', '#performance', '#freestyle', '#production'],
-    bgImage: 'assets/franky-bg.jpg' // Assurez-vous d'avoir cette image
-  };
+  heroSlides = [
+    {
+      id: 1,
+      type: 'video',
+      videoId: 'QpHSydRv9do',
+      category: 'SLAM POÉSIE',
+      title: "NNP Freestyle avec Franky'D",
+      description: "Performance exceptionnelle de slam.",
+      tags: ['#slam', '#performance']
+    },
+    {
+      id: 2,
+      type: 'image',
+      image: 'hero/hero-001.jpg', 
+      category: 'DOCUMENTAIRE',
+      title: "Au cœur du Congo",
+      description: "Immersion dans la culture congolaise.",
+      tags: ['#congo', '#culture']
+    },
+    {
+      id: 3,
+      type: 'image',
+      image: 'hero/hero-002.jpg',
+      category: 'SERIES',
+      title: "Les Chroniques de Goma",
+      description: "Le quotidien de la jeunesse créative.",
+      tags: ['#goma', '#serie']
+    }
+  ];
 
-  selectCategory(cat: string) {
-    this.categorySelected.set(cat);
+  currentIndex = signal(0);
+  private timer: any;
+
+  ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.startTimer();
+    }
   }
+
+  startTimer() {
+    this.timer = setInterval(() => {
+      // On ne change pas de slide si c'est une vidéo en cours
+      if (this.heroSlides[this.currentIndex()].type !== 'video') {
+        this.nextSlide();
+      }
+    }, 15000);
+  }
+
+  nextSlide() { this.currentIndex.update(i => (i + 1) % this.heroSlides.length); }
+  prevSlide() { this.currentIndex.update(i => (i - 1 + this.heroSlides.length) % this.heroSlides.length); }
+  
+  selectCategory(cat: string) { this.categorySelected.set(cat); }
+
+  ngOnDestroy() { if (this.timer) clearInterval(this.timer); }
 }
