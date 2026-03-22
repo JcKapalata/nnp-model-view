@@ -1,1 +1,54 @@
-<p>navbar.component works!</p>
+<mat-toolbar class="nnp-navbar">
+  <div class="navbar-wrapper">
+    
+    <div class="nav-left">
+      <a href="/" class="logo-link">
+        <img src="assets/logo.png" alt="NNP Stream" class="logo-img">
+      </a>
+    </div>
+
+    <div class="nav-center">
+      <div class="search-box">
+        <mat-icon>search</mat-icon>
+        <input type="text" placeholder="Rechercher des vidéos...">
+        <button mat-flat-button color="primary" class="btn-search">
+          Recherche
+        </button>
+      </div>
+    </div>
+
+    <div class="nav-right desktop-only">
+      <button mat-button class="nav-item">
+        <mat-icon>live_tv</mat-icon>
+        En Direct
+      </button>
+      
+      <button mat-button class="nav-item">
+        <mat-icon>favorite_border</mat-icon>
+        Favoris
+      </button>
+
+      <button mat-button [matMenuTriggerFor]="langMenu" class="lang-picker">
+        <img src="assets/flags/fr.png" alt="FR" class="flag-icon">
+        FR
+        <mat-icon>expand_more</mat-icon>
+      </button>
+      
+      <mat-menu #langMenu="matMenu" class="dark-menu">
+        <button mat-menu-item>English</button>
+        <button mat-menu-item>Français</button>
+      </mat-menu>
+    </div>
+
+    <button mat-icon-button class="mobile-only" (click)="toggleMenu()">
+      <mat-icon>{{ isMenuOpen() ? 'close' : 'menu' }}</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+@if (isMenuOpen()) {
+  <div class="mobile-menu mat-elevation-z4">
+    <button mat-menu-item><mat-icon>live_tv</mat-icon> En Direct</button>
+    <button mat-menu-item><mat-icon>favorite_border</mat-icon> Favoris</button>
+  </div>
+}
