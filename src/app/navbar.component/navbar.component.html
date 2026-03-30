@@ -18,6 +18,10 @@
     </div>
 
     <div class="nav-right desktop-only">
+        <button mat-icon-button (click)="toggleTheme()" class="theme-toggle">
+            <mat-icon>{{ themeService.isDarkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        </button>
+
         <button mat-button class="nav-item">
             <mat-icon>live_tv</mat-icon>
             En Direct
@@ -54,6 +58,10 @@
 
 @if (isMenuOpen()) {
   <div class="mobile-menu mat-elevation-z4">
+    <button mat-menu-item (click)="toggleTheme()">
+        <mat-icon>{{ themeService.isDarkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        Mode {{ themeService.isDarkMode() ? 'Clair' : 'Sombre' }}
+    </button>
     <button mat-menu-item><mat-icon>live_tv</mat-icon> En Direct</button>
     <button mat-menu-item><mat-icon>favorite_border</mat-icon> Favoris</button>
     <button mat-menu-item [matMenuTriggerFor]="langMenu">

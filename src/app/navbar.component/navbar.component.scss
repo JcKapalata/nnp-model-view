@@ -1,5 +1,6 @@
 .nnp-navbar {
-  background: rgba(17, 17, 17, 0.9) !important; // var(--nnp-bg-header)
+  // Utilisation de la variable header qui gère la transparence
+  background: var(--nnp-bg-header) !important; 
   backdrop-filter: blur(15px);
   height: 80px;
   position: fixed;
@@ -7,7 +8,9 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  // Utilisation de la variable de bordure dynamique
+  border-bottom: 1px solid var(--nnp-border);
+  transition: all 0.3s ease;
 
   .navbar-wrapper {
     width: 100%;
@@ -28,35 +31,37 @@
 .search-box {
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.08);
+  // Fond secondaire (gris foncé en dark, gris clair en light)
+  background: var(--nnp-bg-secondary);
+  border: 1px solid var(--nnp-border);
   border-radius: 50px;
   padding: 4px 4px 4px 16px;
   width: 450px;
   transition: all 0.3s ease;
 
   &:focus-within {
-    background: rgba(255, 255, 255, 0.12);
     box-shadow: 0 0 0 2px rgba(246, 148, 29, 0.2);
   }
 
   mat-icon {
-    color: #888;
+    color: var(--nnp-text-muted);
     margin-right: 10px;
   }
 
   input {
     background: transparent;
     border: none;
-    color: white;
+    color: var(--nnp-text-main);
     flex: 1;
     outline: none;
     font-size: 0.9rem;
-    &::placeholder { color: #666; }
+    &::placeholder { color: var(--nnp-text-muted); }
   }
 
   .btn-search {
     background-color: var(--nnp-accent) !important;
-    color: #000 !important;
+    // On peut garder noir ici si l'orange est clair, ou utiliser le fond primaire
+    color: #000 !important; 
     border-radius: 50px;
     font-weight: 600;
     padding: 0 20px;
@@ -70,29 +75,62 @@
   align-items: center;
   gap: 0.5rem;
 
-  .nav-item {
-    color: white;
+  .nav-item, .theme-toggle {
+    color: var(--nnp-text-main) !important;
     font-weight: 400;
     mat-icon { margin-right: 6px; }
   }
 }
 
+.lang-picker {
+    color: var(--nnp-text-main) !important;
+}
+
+/* --- Style des drapeaux --- */
 .flag-icon {
-  width: 24px;
-  height: 16px;
+  width: 22px;      /* Largeur fixe pour la cohérence */
+  height: 15px;     /* Hauteur proportionnelle */
   object-fit: cover;
   border-radius: 2px;
   margin-right: 8px;
+  // Ajout d'une ombre très légère pour que les drapeaux blancs 
+  // (comme la France ou le Japon) ne disparaissent pas sur fond blanc en mode clair
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.2); 
+  vertical-align: middle;
 }
 
 .flag-icon-menu {
   width: 20px;
+  height: 14px;
+  object-fit: cover;
   margin-right: 12px;
   border-radius: 2px;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Ajustement du texte à côté du drapeau */
+.lang-text {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* --- Ajustement du bouton Langue pour l'alignement --- */
+.lang-picker {
+  display: flex !important;
+  align-items: center;
+  color: var(--nnp-text-main) !important;
+  
+  // Pour éviter que le bouton ne saute quand on change d'icône
+  .mat-mdc-button-touch-target {
+    display: none; 
+  }
 }
 
 // Responsive
-.mobile-only { display: none; }
+.mobile-only { 
+    display: none; 
+    color: var(--nnp-text-main) !important;
+}
 
 @media (max-width: 1024px) {
   .nav-center { width: 300px; }
@@ -100,7 +138,7 @@
 
 @media (max-width: 850px) {
   .desktop-only, .nav-center { display: none; }
-  .mobile-only { display: block; color: white; }
+  .mobile-only { display: block; }
 }
 
 .mobile-menu {
@@ -108,24 +146,30 @@
   top: 80px;
   left: 0;
   right: 0;
-  background: #1a1a1a;
+  background: var(--nnp-bg-secondary);
+  border-bottom: 1px solid var(--nnp-border);
   display: flex;
   flex-direction: column;
   padding: 10px;
   z-index: 999;
   
   button {
-    color: white;
+    color: var(--nnp-text-main) !important;
     text-align: left;
     height: 50px;
   }
 }
 
-// Personnalisation du menu Material (Dark)
+// Personnalisation du menu Material (Adaptatif)
 ::ng-deep .nnp-dark-menu {
-  background: #222 !important;
+  background: var(--nnp-bg-secondary) !important;
+  border: 1px solid var(--nnp-border);
+
   .mat-mdc-menu-item {
-    color: white !important;
-    &:hover { background: rgba(255, 255, 255, 0.1) !important; }
+    color: var(--nnp-text-main) !important;
+    &:hover { 
+        background: var(--nnp-accent) !important; 
+        color: #000 !important; // Texte noir sur orange au survol
+    }
   }
 }

@@ -1,11 +1,47 @@
-
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
+// 1. DÉFINITION DES VARIABLES (Design System)
+:root {
+  /* --- MODE SOMBRE (Par défaut) --- */
+  --nnp-bg-primary: #111111;
+  --nnp-bg-secondary: #1a1a1a;
+  --nnp-bg-header: rgba(17, 17, 17, 0.85);
+  
+  --nnp-accent: #f6941d;         
+  --nnp-accent-hover: #ffaa33;   
+  
+  --nnp-text-main: #ffffff;      
+  --nnp-text-muted: #aaaaaa;    
+  
+  --tw-gradient-from: #14161a;
+  --tw-gradient-to: rgba(20, 22, 26, 0);
+  
+  --nnp-border: #333333;
+  --nnp-shadow: rgba(0, 0, 0, 0.5);
+  --scrollbar-thumb: #333;
+}
+
+/* --- MODE CLAIR (Surcharge via classe) --- */
+body.light-mode {
+  --nnp-bg-primary: #ffffff;      /* Fond blanc */
+  --nnp-bg-secondary: #f5f5f7;    /* Gris très clair pour les cartes */
+  --nnp-bg-header: rgba(255, 255, 255, 0.9);
+  
+  --nnp-accent: #f6941d;          /* On garde l'orange identitaire */
+  --nnp-accent-hover: #e68510;    /* Un peu plus sombre pour le contraste */
+  
+  --nnp-text-main: #1a1a1a;       /* Texte presque noir */
+  --nnp-text-muted: #666666;      /* Gris moyen */
+  
+  --tw-gradient-from: #f0f0f0;
+  --tw-gradient-to: rgba(240, 240, 240, 0);
+  
+  --nnp-border: #e0e0e0;          /* Bordures légères */
+  --nnp-shadow: rgba(0, 0, 0, 0.1);
+  --scrollbar-thumb: #ccc;
+}
+
+// 2. CONFIGURATION ANGULAR MATERIAL
 html {
   height: 100%;
   @include mat.theme((
@@ -18,55 +54,32 @@ html {
   ));
 }
 
-body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
-  margin: 0;
-  height: 100%;
-}
-/* You can add global styles to this file, and also import other style files */
-/* Variables de couleurs basées sur le design NNP */
-:root {
-  /* Couleurs de fond */
-  --nnp-bg-primary: #111111;     /* Noir profond du fond */
-  --nnp-bg-secondary: #1a1a1a;   /* Gris très foncé pour les cartes/sections */
-  --nnp-bg-header: rgba(17, 17, 17, 0.85); /* Fond de la navbar avec transparence */
-  
-  /* Couleurs d'accentuation */
-  --nnp-accent: #f6941d;         /* Orange signature (bouton Recherche) */
-  --nnp-accent-hover: #ffaa33;   /* Orange plus clair au survol */
-  
-  /* Couleurs de texte */
-  --nnp-text-main: #ffffff;      /* Texte blanc pur */
-  --nnp-text-muted: #aaaaaa;    /* Texte gris pour les descriptions/catégories */
-  
-  /* Système de dégradé (vu dans votre inspecteur d'élément) */
-  --tw-gradient-from: #14161a;
-  --tw-gradient-to: rgba(20, 22, 26, 0);
-}
-
-/* Styles de base pour l'application */
+// 3. STYLES DE BASE
 html, body {
   height: 100%;
   margin: 0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: var(--nnp-bg-primary);
-  color: var(--nnp-text-main);
   scroll-behavior: smooth;
+  transition: background-color 0.3s ease, color 0.3s ease; // Transition douce entre les modes
 }
 
-/* Scrollbar personnalisée (pour rester dans le thème sombre) */
+body {
+  background-color: var(--nnp-bg-primary);
+  color: var(--nnp-text-main);
+  
+  // Variables système Material pour assurer la cohérence
+  --mat-sys-surface: var(--nnp-bg-primary);
+  --mat-sys-on-surface: var(--nnp-text-main);
+  
+  /* Gestion du thème système (optionnel) */
+  color-scheme: dark; 
+}
+
+body.light-mode {
+  color-scheme: light;
+}
+
+// 4. SCROLLBAR PERSONNALISÉE
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -76,10 +89,23 @@ html, body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: var(--scrollbar-thumb);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--nnp-accent);
+}
+
+// 5. EXEMPLE D'UTILISATION (Composants génériques)
+.card {
+  background-color: var(--nnp-bg-secondary);
+  border: 1px solid var(--nnp-border);
+  box-shadow: 0 4px 6px var(--nnp-shadow);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.text-muted {
+  color: var(--nnp-text-muted);
 }
